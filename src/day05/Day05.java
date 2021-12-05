@@ -39,10 +39,14 @@ public class Day05 {
 		public boolean isVertical() {
 			return (start.x == end.x);
 		}
+		
+		public int sgn(int d) {
+			return (d == 0) ? 0 : (d < 0) ? -1 : 1;
+		}
 
 		public List<Point> points() {
 			List<Point> points = new ArrayList<>();
-			if (isHorizontal()) {
+			 if (isHorizontal()) {
 				int startX = Math.min(start.x, end.x);
 				int endX = Math.max(start.x, end.x);
 				for (int x = startX; x <= endX; x++) {
@@ -54,12 +58,9 @@ public class Day05 {
 				for (int y = startY; y <= endY; y++) {
 					points.add(new Point(start.x, y));
 				}
-			} else {
-				int dx = end.x - start.x;
-				int dy = end.y - start.y;
-				int sgnX = (int)Math.signum(dx);
-				int sgnY = (int)Math.signum(dy);
-				
+			} else { 
+				int sgnX = sgn(end.x - start.x);
+				int sgnY = sgn(end.y - start.y);
 				Point p = new Point(start.x, start.y);
 				while ((p.x != end.x) && (p.y != end.y)) {
 					points.add(p);
@@ -68,7 +69,7 @@ public class Day05 {
 				}
 				points.add(end);
 
-			}
+			} 
 			return points;
 		}
 
