@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Day10 {
 		points.put(')', 3);
 		points.put(']', 57);
 		points.put('}', 1197);
-		points.put('>', 25137);	
+		points.put('>', 25137);
 		int result = 0;
 		Deque<Character> expected = new ArrayDeque<>();
 		for (String line : data) {
@@ -43,8 +43,7 @@ public class Day10 {
 				if (pairs.containsKey(ch)) {
 					expected.push(pairs.get(ch));
 				} else {
-					char exp = expected.pop();
-					if (ch != exp) {
+					if (ch != expected.pop()) {
 						result += points.get(ch);
 						break;
 					}
@@ -54,13 +53,13 @@ public class Day10 {
 		}
 		return result;
 	}
-	
+
 	public static long part02() {
 		Map<Character, Long> points = new HashMap<>();
 		points.put(')', 1L);
 		points.put(']', 2L);
 		points.put('}', 3L);
-		points.put('>', 4L);	
+		points.put('>', 4L);
 		List<Long> scores = new ArrayList<>();
 		Deque<Character> expected = new ArrayDeque<>();
 		for (String line : data) {
@@ -80,13 +79,11 @@ public class Day10 {
 			while (!expected.isEmpty()) {
 				score = score * 5 + points.get(expected.pop());
 			}
-			if(score != 0) {
+			if (score != 0) {
 				scores.add(score);
 			}
-		}	
-		Collections.sort(scores);
-		
-		
+		}
+		scores.sort(Comparator.naturalOrder());
 		return scores.get(scores.size() / 2);
 	}
 
